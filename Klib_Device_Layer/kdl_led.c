@@ -5,7 +5,15 @@
   * @author  Kirk_Z
   * @name    Kefan Zheng
   * @brief   Source file of Device LED
+  * @version V0.0.0
   * @email   kirk_z@yeah.net
+  @verbatim
+  ==============================================================================
+                        ##### How to use this driver #####
+  ==============================================================================
+
+
+  @endverbatim
   ******************************************************************************
   * @attention
   *
@@ -21,8 +29,10 @@
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
+
 /* Exported functions --------------------------------------------------------*/
 
+/* Initialization and de-initialization functions *****************************/
 /**
   * @brief  Initialize the LED
   * @param  dled  pointer of the led
@@ -46,6 +56,9 @@ KDL_State_t KDL_LED_Init(KDL_LED_t* dled, GPIO_TypeDef* port, uint16_t pin, KDL_
 	return KDL_OK;
 }
 
+/* Configuration functions ****************************************************/
+
+/* IO operation functions *****************************************************/
 /**
   * @brief  Turn on the LED
   * @param  dled  pointer of the led
@@ -111,6 +124,7 @@ KDL_State_t KDL_LED_Turn(KDL_LED_t* dled, KDL_LED_State stat)
 	return KDL_OK;
 }
 
+/* Peripheral State and Error functions ***************************************/
 /**
   * @brief  Check whether it is legal LED
   * @param  dled  pointer of the led
@@ -139,3 +153,4 @@ KDL_State_t KDL_LED_ResetCheck(KDL_LED_t* dled)
 }
 
 
+/************************ (C) COPYRIGHT kirkz.tech *****END OF FILE****/

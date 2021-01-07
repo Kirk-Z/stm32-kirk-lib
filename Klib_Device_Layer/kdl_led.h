@@ -5,6 +5,7 @@
   * @author  Kirk_Z
   * @name    Kefan Zheng
   * @brief   Header file of Device LED
+  * @version V0.0.0
   * @email   kirk_z@yeah.net
   ******************************************************************************
   * @attention
@@ -24,7 +25,6 @@ extern "C" {
 #include "kdl.h"
 
 /* Exported types ------------------------------------------------------------*/
-
 /**
   * @brief  enum of LED on status
   */
@@ -60,12 +60,13 @@ typedef struct _KDL_LED_t {
 /* Private constants ---------------------------------------------------------*/
 /* Private macros ------------------------------------------------------------*/
 #define __IS_KDL_LED_T(__HANDLE__) (KDL_OK == KDL_LED_Check(__HANDLE__))
+
 /* Exported functions --------------------------------------------------------*/
 
-/* Configuration functions ****************************************************/
+/* Initialization and de-initialization functions *****************************/
 KDL_State_t KDL_LED_Init(KDL_LED_t* dled, GPIO_TypeDef* port, uint16_t pin, KDL_LED_State stat);
-KDL_State_t KDL_LED_Check(KDL_LED_t* dled);
-KDL_State_t KDL_LED_ResetCheck(KDL_LED_t* dled);
+
+/* Configuration functions ****************************************************/
 
 /* IO operation functions *****************************************************/
 KDL_State_t KDL_LED_TurnOn(KDL_LED_t* dled);
@@ -73,7 +74,13 @@ KDL_State_t KDL_LED_TurnOff(KDL_LED_t* dled);
 KDL_State_t KDL_LED_Toggle(KDL_LED_t* dled);
 KDL_State_t KDL_LED_Turn(KDL_LED_t* dled, KDL_LED_State stat);
 
+/* State and Error functions **************************************************/
+KDL_State_t KDL_LED_Check(KDL_LED_t* dled);
+KDL_State_t KDL_LED_ResetCheck(KDL_LED_t* dled);
 
+/* Peripheral State and Error functions ***************************************/
+
+/* Private functions ---------------------------------------------------------*/
 
 #ifdef __cplusplus
 }
