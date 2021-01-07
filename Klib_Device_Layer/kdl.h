@@ -5,6 +5,7 @@
   * @author  Kirk_Z
   * @name    Kefan Zheng
   * @brief   Header file of Device layer
+  * @version V0.0.0
   * @email   kirk_z@yeah.net
   ******************************************************************************
   * @attention
@@ -35,8 +36,25 @@ typedef enum {
 	KDL_TIMEOUT  = 0x03,
 } KDL_State_t;
 
+/* Exported constants --------------------------------------------------------*/
+/* Exported macros -----------------------------------------------------------*/
+
+/* Private constants ---------------------------------------------------------*/
+/* Private macros ------------------------------------------------------------*/
+
+/* Exported functions --------------------------------------------------------*/
+
+/* Initialization and de-initialization functions *****************************/
+/* Configuration functions ****************************************************/
+/* IO operation functions *****************************************************/
+/* State and Error functions **************************************************/
+
+/* Private functions ---------------------------------------------------------*/
+
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* KDL_H_ */
+
+/************************ (C) COPYRIGHT kirkz.tech *****END OF FILE****/
