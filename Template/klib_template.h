@@ -44,6 +44,6 @@
 }
 #endif
 
-#endif /* KLIB_TEMPLATE */
+#endif /* KLIB_TEMPLATE_H_ */
 
 /************************ (C) COPYRIGHT kirkz.tech *****END OF FILE****/
