@@ -59,6 +59,9 @@ typedef struct _KDL_LED_t {
 /* Exported macro ------------------------------------------------------------*/
 /* Private constants ---------------------------------------------------------*/
 /* Private macros ------------------------------------------------------------*/
+/**
+ * @brief  check whether pointer valid
+ */
 #define __IS_KDL_LED_T(__HANDLE__) (KDL_OK == KDL_LED_Check(__HANDLE__))
 
 /* Exported functions --------------------------------------------------------*/
