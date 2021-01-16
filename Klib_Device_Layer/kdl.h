@@ -35,7 +35,6 @@ typedef enum {
 	KDL_BUSY     = 0x02,
 	KDL_TIMEOUT  = 0x03,
 } KDL_State_t;
-
 /* Exported constants --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/
 

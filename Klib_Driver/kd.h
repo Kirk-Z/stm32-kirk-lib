@@ -25,12 +25,12 @@
 #include "stdint.h"
 #include "stddef.h"
 /* Exported types ------------------------------------------------------------*/
- typedef enum {
- 	KD_OK       = 0x00,
- 	KD_ERROR    = 0x01,
- 	KD_BUSY     = 0x02,
- 	KD_TIMEOUT  = 0x03,
- } KD_State_t;
+typedef enum {
+	KD_OK       = 0x00,
+	KD_ERROR    = 0x01,
+	KD_BUSY     = 0x02,
+	KD_TIMEOUT  = 0x03,
+} KD_State_t;
 /* Exported constants --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/
 
