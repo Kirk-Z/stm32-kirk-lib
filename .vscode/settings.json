@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "kd_decimalpid.h": "c",
+        "kd_floatpid.h": "c"
+    }
+}
