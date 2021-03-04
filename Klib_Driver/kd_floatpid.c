@@ -70,6 +70,16 @@ KD_State_t KD_FloatPID_SetIndex(KD_FloatPID_t* kpid, KD_FloatPID_Const_t set, fl
     kpid->Target = index;
     return KD_OK;
   }
+  if(set == KD_FloatPID_Tolerance)
+  {
+    kpid->Tolerance = index;
+    return KD_OK;
+  }
+  if(set == KD_FloatPID_Bound)
+  {
+    kpid->Bound = index;
+    return KD_OK;
+  }
   return KD_ERROR;
 }
 /* IO operation functions *****************************************************/
@@ -80,6 +90,7 @@ KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t inte
 
   /* Get Error */
   Error = current - kpid->Target;
+  Error /= kpid->Tolerance;
 
   Tmp = 0;
 
@@ -90,7 +101,7 @@ KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t inte
   Tmp += kpid->indexI * (Error - kpid->Error0);
 
   /* Accumulate D */
-  Tmp += kpid->indexD * (Error + kpid->Error1 - kpid->Error0 * 2.0);
+  Tmp += kpid->indexD * (Error + kpid->Error1 - kpid->Error0 - kpid->Error0);
 
   /* Switch Buffer */
   kpid->Error1 = kpid->Error0;
@@ -98,6 +109,21 @@ KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t inte
 
   /* Output result */
   kpid->Result += Tmp;
+
+  /* Limit to bound */
+  if(fabs(kpid->Result)>kpid->Bound)
+  {
+    if(kpid->Result<0)
+    {
+      kpid->Result = -kpid->Bound;
+    }
+    else
+    {
+      kpid->Result = kpid->Bound;
+    }
+  }
+
+  /* Execute downlink */
   kpid->Downlink(kpid->Result);
 
   return KD_OK;
