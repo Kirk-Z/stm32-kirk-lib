@@ -1,32 +1,54 @@
 /**
   ******************************************************************************
-  * @date    Jan 8, 2021
-  * @file    kd_malloc.h
+  * @date    Feb 22, 2021
+  * @file    kdl_osbutton.h
   * @author  Kirk_Z
   * @name    Kefan Zheng
-  * @brief   Self-developed memory management header file
+  * @brief   Template header file
   * @version V0.0.0
   * @email   kirk_z@yeah.net
   ******************************************************************************
-  * @attention
+  * @attention  FreeRTOS needed
   *
   ******************************************************************************
   */
-
+/**
+ * Problems to be solved
+ *
+ * The first timer (release/press) needed to be started in interrupt callback
+ * How to do this in FreeRTOS?
+ */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef KD_MALLOC_H_
-#define KD_MALLOC_H_
+#ifndef KDL_OSBUTTON_H_
+#define KDL_OSBUTTON_H_
 
 #ifdef __cplusplus
  extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "kd.h"
-#define KD_MALLOC_USE_FREERTOS
-#ifndef KD_MALLOC_USE_FREERTOS
-/* Exported types ------------------------------------------------------------*/
+#include "kdl.h"
 
+#include "cmsis_os.h"
+#include "cmsis_os2.h"
+/* Exported types ------------------------------------------------------------*/
+typedef struct _KDL_OSButton_Event_t {
+	uint32_t ticks;
+	void(*event)(void* argument);
+	osTimerAttr_t attr;
+	osTimerId_t id;
+} KDL_OSButton_Event_t;
+
+typedef struct _KDL_OSButton_t {
+	KDL_OSButton_Event_t press;
+	KDL_OSButton_Event_t offset;
+	KDL_OSButton_Event_t period;
+	KDL_OSButton_Event_t release;
+
+	uint32_t state;
+
+	uint32_t check;
+} KDL_OSButton_t;
 /* Exported constants --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/
 
@@ -36,35 +58,16 @@
 /* Exported functions --------------------------------------------------------*/
 
 /* Initialization and de-initialization functions *****************************/
- void KD_Mem_Init(void);
 /* Configuration functions ****************************************************/
- KD_State_t KD_Free_Base(void* loc, uint32_t size, uint32_t length);
- void* KD_Malloc_Base(uint32_t size, uint32_t length);
- void* KD_Realloc_Base(void* loc, uint32_t size, uint32_t length, uint32_t new_size, uint32_t new_length);
 /* IO operation functions *****************************************************/
- KD_State_t KD_Free(void* loc);
- void* KD_Malloc(uint32_t size, uint32_t length);
- void* KD_Realloc(void* loc, uint32_t new_size, uint32_t new_length);
 /* State and Error functions **************************************************/
- uint32_t KD_Mem_CalculateWord(uint32_t size, uint32_t length);
- uint32_t KD_Mem_CalculateBlock(uint32_t length);
- uint32_t KD_Mem_UseRate(void);
- uint8_t KD_Mem_First_1(uint32_t num);
 
 /* Private functions ---------------------------------------------------------*/
-
-#else /* KD_MALLOC_USE_FREERTOS */
-#include "FreeRTOS.h"
-#include "cmsis_os.h"
-#endif /* KD_MALLOC_USE_FREERTOS */
-
-void *Malloc(size_t size);
-void Free(void* pv);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* KD_MALLOC_H_ */
+#endif /* KDL_OSBUTTON_H_ */
 
 /************************ (C) COPYRIGHT kirkz.tech *****END OF FILE****/

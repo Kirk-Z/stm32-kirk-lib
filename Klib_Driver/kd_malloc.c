@@ -22,10 +22,11 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "kd_malloc.h"
+#ifndef KD_MALLOC_USE_FREERTOS
 #include "kd_math.h"
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define KD_MEM_MAPSIZE 0x100U
+#define KD_MEM_MAPSIZE 0x10U
 #define KD_MEM_POOLSIZE (KD_MEM_MAPSIZE << 5)
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -408,5 +409,27 @@ uint8_t KD_Mem_First_1(uint32_t num)
 	}
 	return n;
 }
+
+void *Malloc(size_t size)
+{
+	return KD_Malloc(size, 1);
+}
+
+void Free(void* pv)
+{
+	KD_Free(pv);
+}
+
+#else /* KD_MALLOC_USE_FREERTOS */
+void *Malloc(size_t size)
+{
+	return pvPortMalloc(size);
+}
+
+void Free(void* pv)
+{
+	vPortFree(pv);
+}
+#endif /* KD_MALLOC_USE_FREERTOS */
 
 /************************ (C) COPYRIGHT kirkz.tech *****END OF FILE****/

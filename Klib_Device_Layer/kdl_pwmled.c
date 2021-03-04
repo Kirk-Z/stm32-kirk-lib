@@ -46,7 +46,6 @@
   */
 KDL_State_t KDL_PWMLED_Init(KDL_PWMLED_t* dled, TIM_HandleTypeDef* port, uint32_t channel, KDL_PWMLED_OnState onstat)
 {
-	// TODO
 	if(dled == NULL)
 		return KDL_ERROR;
 
@@ -79,7 +78,6 @@ KDL_State_t KDL_PWMLED_Init(KDL_PWMLED_t* dled, TIM_HandleTypeDef* port, uint32_
   */
 KDL_State_t KDL_PWMLED_On(KDL_PWMLED_t* dled)
 {
-	// TODO
 	if(!__IS_KDL_PWMLED_T(dled))
 		return KDL_ERROR;
 
@@ -96,7 +94,6 @@ KDL_State_t KDL_PWMLED_On(KDL_PWMLED_t* dled)
   */
 KDL_State_t KDL_PWMLED_Off(KDL_PWMLED_t* dled)
 {
-	// TODO
 	if(!__IS_KDL_PWMLED_T(dled))
 			return KDL_ERROR;
 
@@ -114,7 +111,6 @@ KDL_State_t KDL_PWMLED_Off(KDL_PWMLED_t* dled)
   */
 KDL_State_t KDL_PWMLED_SetBrightness(KDL_PWMLED_t* dled, uint16_t brightness)
 {
-	// TODO
 	if(!__IS_KDL_PWMLED_T(dled))
 		return KDL_ERROR;
 
@@ -133,7 +129,6 @@ KDL_State_t KDL_PWMLED_SetBrightness(KDL_PWMLED_t* dled, uint16_t brightness)
   */
 KDL_State_t KDL_PWMLED_SetBrightnessRange(KDL_PWMLED_t* dled, uint16_t range)
 {
-	// TODO
 	double ratio;
 	if(!__IS_KDL_PWMLED_T(dled))
 		return KDL_ERROR;
@@ -158,7 +153,6 @@ KDL_State_t KDL_PWMLED_SetBrightnessRange(KDL_PWMLED_t* dled, uint16_t range)
   */
 KDL_State_t KDL_PWMLED_SetBound(KDL_PWMLED_t* dled, uint16_t bound)
 {
-	// TODO
 	if(!__IS_KDL_PWMLED_T(dled))
 			return KDL_ERROR;
 
@@ -177,7 +171,6 @@ KDL_State_t KDL_PWMLED_SetBound(KDL_PWMLED_t* dled, uint16_t bound)
   */
 KDL_State_t KDL_PWMLED_SetBoundRange(KDL_PWMLED_t* dled, uint16_t range)
 {
-	// TODO
 	double ratio;
 
 	if(!__IS_KDL_PWMLED_T(dled))
@@ -204,7 +197,6 @@ KDL_State_t KDL_PWMLED_SetBoundRange(KDL_PWMLED_t* dled, uint16_t range)
   */
 KDL_State_t KDL_PWMLED_SetGamma(KDL_PWMLED_t* dled, double gamma)
 {
-	// TODO
 	if(!__IS_KDL_PWMLED_T(dled))
 			return KDL_ERROR;
 
@@ -223,7 +215,6 @@ KDL_State_t KDL_PWMLED_SetGamma(KDL_PWMLED_t* dled, double gamma)
   */
 KDL_State_t KDL_PWMLED_Refresh(KDL_PWMLED_t* dled)
 {
-	// TODO
 	double Pulse;
 	uint16_t uPulse;
 
@@ -298,7 +289,6 @@ KDL_State_t KDL_PWMLED_Refresh(KDL_PWMLED_t* dled)
   */
 KDL_State_t KDL_PWMLED_Check(KDL_PWMLED_t* dled)
 {
-	// TODO
 	if(dled == NULL)
 		return KDL_ERROR;
 
@@ -313,7 +303,6 @@ KDL_State_t KDL_PWMLED_Check(KDL_PWMLED_t* dled)
   */
 KDL_State_t KDL_PWMLED_ResetCheck(KDL_PWMLED_t* dled)
 {
-	// TODO
 	if(dled == NULL)
 		return KDL_ERROR;
 

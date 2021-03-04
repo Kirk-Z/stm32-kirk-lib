@@ -43,15 +43,15 @@
  */
 KDL_State_t KDL_ST24Cxx_Init(KDL_ST24Cxx_t* dst, I2C_HandleTypeDef* port, uint16_t address, KDL_ST24Cxx_Size_t size)
 {
-	if(dst == NULL)
-		return KDL_ERROR;
+  if(dst == NULL)
+    return KDL_ERROR;
 
-	dst->Port = port;
-	dst->Address = address;
-	dst->Size = size;
-	dst->Stat = 1;
+  dst->Port = port;
+  dst->Address = address;
+  dst->Size = size;
+  dst->Stat = 1;
 
-	return KDL_OK;
+  return KDL_OK;
 }
 /* Configuration functions ****************************************************/
 /* IO operation functions *****************************************************/
@@ -65,15 +65,15 @@ KDL_State_t KDL_ST24Cxx_Init(KDL_ST24Cxx_t* dst, I2C_HandleTypeDef* port, uint16
  */
 KDL_State_t KDL_ST24Cxx_ReadDWord(KDL_ST24Cxx_t* dst, uint32_t addr, void* buffer)
 {
-	if(!__IS_KDL_ST24CXX_T(dst))
-		return KDL_ERROR;
-	/* Reading interval */
-	HAL_Delay(KDL_ST24CXX_OPERATION_INTERVAL);
-	/* Read memory */
-	if(HAL_OK == HAL_I2C_Mem_Read(dst->Port, dst->Address + 1, addr, I2C_MEMADD_SIZE_8BIT, (uint8_t*)buffer, 8, 0x1FFFF))
-		return KDL_OK;
+  if(!__IS_KDL_ST24CXX_T(dst))
+    return KDL_ERROR;
+  /* Reading interval */
+  HAL_Delay(KDL_ST24CXX_OPERATION_INTERVAL);
+  /* Read memory */
+  if(HAL_OK == HAL_I2C_Mem_Read(dst->Port, dst->Address + 1, addr, I2C_MEMADD_SIZE_8BIT, (uint8_t*)buffer, 8, 0x1FFFF))
+    return KDL_OK;
 
-	return KDL_ERROR;
+  return KDL_ERROR;
 }
 
 /**
@@ -86,15 +86,15 @@ KDL_State_t KDL_ST24Cxx_ReadDWord(KDL_ST24Cxx_t* dst, uint32_t addr, void* buffe
  */
 KDL_State_t KDL_ST24Cxx_WriteDWord(KDL_ST24Cxx_t* dst, uint32_t addr, void* buffer)
 {
-	if(!__IS_KDL_ST24CXX_T(dst))
-		return KDL_ERROR;
-	/* Writing interval */
-	HAL_Delay(KDL_ST24CXX_OPERATION_INTERVAL);
-	/* Write memory */
-	if(HAL_OK == HAL_I2C_Mem_Write(dst->Port, dst->Address, addr, I2C_MEMADD_SIZE_8BIT, (uint8_t*)buffer, 8, 0x1FFFF))
-		return KDL_OK;
+  if(!__IS_KDL_ST24CXX_T(dst))
+    return KDL_ERROR;
+  /* Writing interval */
+  HAL_Delay(KDL_ST24CXX_OPERATION_INTERVAL);
+  /* Write memory */
+  if(HAL_OK == HAL_I2C_Mem_Write(dst->Port, dst->Address, addr, I2C_MEMADD_SIZE_8BIT, (uint8_t*)buffer, 8, 0x1FFFF))
+    return KDL_OK;
 
-	return KDL_ERROR;
+  return KDL_ERROR;
 }
 
 
@@ -111,7 +111,7 @@ KDL_State_t KDL_ST24Cxx_WriteDWord(KDL_ST24Cxx_t* dst, uint32_t addr, void* buff
  */
 KDL_State_t KDL_ST24Cxx_Read(KDL_ST24Cxx_t* dst, uint32_t addr, void* buffer, uint32_t length)
 {
-	return KDL_OK;
+  return KDL_OK;
 }
 
 /**
@@ -127,7 +127,7 @@ KDL_State_t KDL_ST24Cxx_Read(KDL_ST24Cxx_t* dst, uint32_t addr, void* buffer, ui
  */
 KDL_State_t KDL_ST24Cxx_Write(KDL_ST24Cxx_t* dst, uint32_t addr, void* buffer, uint32_t length)
 {
-	return KDL_OK;
+  return KDL_OK;
 }
 
 /* State and Error functions **************************************************/
