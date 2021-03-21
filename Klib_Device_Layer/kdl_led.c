@@ -42,7 +42,7 @@
   *
   * @retval KDL_State_t KDL Status
   */
-KDL_State_t KDL_LED_Init(KDL_LED_t* dled, GPIO_TypeDef* port, uint16_t pin, KDL_LED_State stat)
+KDL_State_t KDL_LED_Init(KDL_LED_t* dled, GPIO_TypeDef* port, uint16_t pin, KDL_LED_OnState stat)
 {
 	if(dled == NULL)
 		return KDL_ERROR;

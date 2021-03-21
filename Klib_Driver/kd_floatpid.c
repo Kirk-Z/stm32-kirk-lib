@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @date    Mar 3, 2021
+  * @date    Mar 7, 2021
   * @file    kd_floatpid.c
   * @author  Kirk_Z
   * @name    Kefan Zheng
@@ -22,7 +22,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "kd_floatpid.h"
-
+#include "math.h"
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -80,6 +80,11 @@ KD_State_t KD_FloatPID_SetIndex(KD_FloatPID_t* kpid, KD_FloatPID_Const_t set, fl
     kpid->Bound = index;
     return KD_OK;
   }
+  if(set == KD_FloatPID_RateLimit)
+  {
+	kpid->RateLimit = index;
+	return KD_OK;
+  }
   return KD_ERROR;
 }
 /* IO operation functions *****************************************************/
@@ -90,15 +95,19 @@ KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t inte
 
   /* Get Error */
   Error = current - kpid->Target;
-  Error /= kpid->Tolerance;
+  Error /= interval;
+  if(fabs(Error) < kpid->Tolerance)
+  {
+	  Error = 0;
+  }
 
   Tmp = 0;
 
   /* Accumulate I */
-  Tmp += kpid->indexP * Error;
+  Tmp += kpid->indexI * Error;
 
   /* Accumulate P */
-  Tmp += kpid->indexI * (Error - kpid->Error0);
+  Tmp += kpid->indexP * (Error - kpid->Error0);
 
   /* Accumulate D */
   Tmp += kpid->indexD * (Error + kpid->Error1 - kpid->Error0 - kpid->Error0);
@@ -107,20 +116,27 @@ KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t inte
   kpid->Error1 = kpid->Error0;
   kpid->Error0 = Error;
 
+  /* Limit rate */
+  if(Tmp > kpid->RateLimit)
+  {
+	Tmp = kpid->RateLimit;
+  }
+  else if(-Tmp > kpid->RateLimit)
+  {
+	Tmp = -kpid->RateLimit;
+  }
+
   /* Output result */
   kpid->Result += Tmp;
 
   /* Limit to bound */
-  if(fabs(kpid->Result)>kpid->Bound)
+  if(kpid->Result > kpid->Bound)
   {
-    if(kpid->Result<0)
-    {
-      kpid->Result = -kpid->Bound;
-    }
-    else
-    {
-      kpid->Result = kpid->Bound;
-    }
+	kpid->Result = kpid->Bound;
+  }
+  else if(-kpid->Result > kpid->Bound)
+  {
+	kpid->Result = -kpid->Bound;
   }
 
   /* Execute downlink */

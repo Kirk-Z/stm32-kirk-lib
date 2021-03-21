@@ -1,10 +1,10 @@
 /**
   ******************************************************************************
-  * @date    Mar 7, 2021
-  * @file    kd_floatpid.h
+  * @date    Mar 13, 2021
+  * @file    general_template.h
   * @author  Kirk_Z
   * @name    Kefan Zheng
-  * @brief   PID control in floating numbers
+  * @brief   Template header file
   * @version V0.0.0
   * @email   kirk_z@yeah.net
   ******************************************************************************
@@ -14,39 +14,17 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef KD_FLOATPID_H_
-#define KD_FLOATPID_H_
+#ifndef GENERAL_TEMPLATE_H_
+#define GENERAL_TEMPLATE_H_
 
 #ifdef __cplusplus
  extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "kd.h"
+
 /* Exported types ------------------------------------------------------------*/
-typedef enum {
-  KD_FloatPID_IndexP,
-  KD_FloatPID_IndexI,
-  KD_FloatPID_IndexD,
-  KD_FloatPID_Target,
-  KD_FloatPID_Tolerance,
-  KD_FloatPID_Bound
 
-} KD_FloatPID_Const_t;
-
-typedef struct _KD_FloatPID_t {
-  float Target;
-  float indexP;
-  float indexI;
-  float indexD;
-  float Tolerance;
-  float Bound;
-  void(*Downlink)(float result);
-
-  /* Private */
-  float Error0, Error1;
-  float Result;
-} KD_FloatPID_t;
 /* Exported constants --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/
 
@@ -56,11 +34,8 @@ typedef struct _KD_FloatPID_t {
 /* Exported functions --------------------------------------------------------*/
 
 /* Initialization and de-initialization functions *****************************/
-KD_State_t KD_FloatPID_Init(KD_FloatPID_t* kpid, void* downlink);
 /* Configuration functions ****************************************************/
-KD_State_t KD_FloatPID_SetIndex(KD_FloatPID_t* kpid, KD_FloatPID_Const_t set, float index);
 /* IO operation functions *****************************************************/
-KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t interval);
 /* State and Error functions **************************************************/
 
 /* Private functions ---------------------------------------------------------*/
@@ -69,6 +44,6 @@ KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t inte
 }
 #endif
 
-#endif /* KD_FLOATPID_H_ */
+#endif /* GENERAL_TEMPLATE_H_ */
 
-/************************ (C) COPYRIGHT kirkz.tech *****END OF FILE****/
+/******************************** END OF FILE ********************************/

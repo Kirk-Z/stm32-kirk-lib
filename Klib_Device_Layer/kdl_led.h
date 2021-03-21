@@ -67,7 +67,7 @@ typedef struct _KDL_LED_t {
 /* Exported functions --------------------------------------------------------*/
 
 /* Initialization and de-initialization functions *****************************/
-KDL_State_t KDL_LED_Init(KDL_LED_t* dled, GPIO_TypeDef* port, uint16_t pin, KDL_LED_State stat);
+KDL_State_t KDL_LED_Init(KDL_LED_t* dled, GPIO_TypeDef* port, uint16_t pin, KDL_LED_OnState stat);
 
 /* Configuration functions ****************************************************/
 

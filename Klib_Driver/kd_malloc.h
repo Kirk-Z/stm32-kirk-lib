@@ -23,7 +23,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "kd.h"
-#define KD_MALLOC_USE_FREERTOS
+// #define KD_MALLOC_USE_FREERTOS
 #ifndef KD_MALLOC_USE_FREERTOS
 /* Exported types ------------------------------------------------------------*/
 
