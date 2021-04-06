@@ -1,10 +1,10 @@
 /**
   ******************************************************************************
-  * @date    Mar 7, 2021
-  * @file    kd_floatpid.c
+  * @date    Mar 24, 2021
+  * @file    kdl_hcsr04.c
   * @author  Kirk_Z
   * @name    Kefan Zheng
-  * @brief   PID control in floating numbers
+  * @brief   HC-SR04 ultrasonic distance module source file
   * @version V0.0.0
   * @email   kirk_z@yeah.net
   @verbatim
@@ -21,8 +21,8 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "kd_floatpid.h"
-#include "math.h"
+#include "kdl_hcsr04.h"
+#include "kd_delay.h"
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -32,87 +32,57 @@
 /* Exported functions --------------------------------------------------------*/
 
 /* Initialization and de-initialization functions *****************************/
-KD_State_t KD_FloatPID_Init(KD_FloatPID_t* kpid, void* downlink)
+KDL_State_t KDL_HCSR04_Init(
+		KDL_HCSR04_t* khcsr,
+		GPIO_TypeDef* Tport,
+		uint16_t Tpin,
+		GPIO_TypeDef* Eport,
+		uint16_t Epin
+		)
 {
-  if(downlink != NULL)
-  {
-    kpid->Downlink = downlink;
-  }
-  else
-  {
-    return KD_ERROR;
-  }
+	if(khcsr == NULL)
+		return KDL_ERROR;
 
-  kpid->Result = 0;
+	KDL_Pin_Init(&khcsr->Trig, Tport, Tpin);
+	KDL_Pin_Init(&khcsr->Echo, Eport, Epin);
 
-  return KD_OK;
+	KDL_Pin_Reset(&khcsr->Trig);
+
+	return KDL_OK;
 }
 /* Configuration functions ****************************************************/
-KD_State_t KD_FloatPID_SetIndex(KD_FloatPID_t* kpid, KD_FloatPID_Const_t set, float index)
-{
-  if(set == KD_FloatPID_IndexP)
-  {
-    kpid->indexP = index;
-    return KD_OK;
-  }
-  if(set == KD_FloatPID_IndexI)
-  {
-    kpid->indexI = index;
-    return KD_OK;
-  }
-  if(set == KD_FloatPID_IndexD)
-  {
-    kpid->indexD = index;
-    return KD_OK;
-  }
-  if(set == KD_FloatPID_Target)
-  {
-    kpid->Target = index;
-    return KD_OK;
-  }
-  if(set == KD_FloatPID_Tolerance)
-  {
-    kpid->Tolerance = index;
-    return KD_OK;
-  }
-  return KD_ERROR;
-}
 /* IO operation functions *****************************************************/
-KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t interval)
+uint32_t KDL_HCSR04_Measure(KDL_HCSR04_t* khcsr)
 {
-  static float Error;
-  static float Tmp;
+	uint32_t tick_start, tick_end, ms_start, ms_end, timeout;
+	double dtmp;
 
-  /* Get Error */
-  Error = current - kpid->Target;
-  Error /= interval;
-  if(fabs(Error) < kpid->Tolerance)
-  {
-	  Error = 0;
-  }
+	/* 10us of pulse */
+	KDL_Pin_Set(&khcsr->Trig);
+	KD_Delay(10);
+	KDL_Pin_Reset(&khcsr->Trig);
 
-  Tmp = 0;
+	/* Wait for echo high */
+	timeout = KDL_HCSR04_TimeOut;
+	while(timeout-- && !KDL_Pin_Read(&khcsr->Echo))
+		tick_start = SysTick->VAL;
+	ms_start = HAL_GetTick();
 
-  /* Accumulate I */
-  Tmp += kpid->indexI * Error;
+	/* Wait for echo low */
+	timeout = KDL_HCSR04_TimeOut;
+	while(timeout-- && KDL_Pin_Read(&khcsr->Echo))
+		tick_end = SysTick->VAL;
+	ms_end = HAL_GetTick();
 
-  /* Accumulate P */
-  Tmp += kpid->indexP * (Error - kpid->Error0);
+	dtmp = tick_end;
+	dtmp -= tick_start;
+	dtmp /= SysTick -> LOAD + 1;
+	dtmp += ms_end - ms_start;
+	dtmp *= 1000;
 
-  /* Accumulate D */
-  Tmp += kpid->indexD * (Error + kpid->Error1 - kpid->Error0 - kpid->Error0);
+	khcsr ->Ticks = (uint32_t)dtmp;
 
-  /* Switch Buffer */
-  kpid->Error1 = kpid->Error0;
-  kpid->Error0 = Error;
-
-  /* Output result */
-  kpid->Result += Tmp;
-
-  /* Execute downlink */
-  kpid->Downlink(kpid->Result);
-
-  return KD_OK;
+	return khcsr->Ticks;
 }
 /* State and Error functions **************************************************/
 

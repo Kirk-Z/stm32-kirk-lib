@@ -1,10 +1,10 @@
 /**
   ******************************************************************************
-  * @date    Mar 7, 2021
-  * @file    kd_floatpid.h
+  * @date    Mar 21, 2021
+  * @file    kdl_mpu6050.h
   * @author  Kirk_Z
   * @name    Kefan Zheng
-  * @brief   PID control in floating numbers
+  * @brief   MPU6050 header file
   * @version V0.0.0
   * @email   kirk_z@yeah.net
   ******************************************************************************
@@ -14,37 +14,27 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef KD_FLOATPID_H_
-#define KD_FLOATPID_H_
+#ifndef KDL_MPU6050_H_
+#define KDL_MPU6050_H_
 
 #ifdef __cplusplus
  extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "kd.h"
+#include "kdl.h"
 /* Exported types ------------------------------------------------------------*/
-typedef enum {
-  KD_FloatPID_IndexP,
-  KD_FloatPID_IndexI,
-  KD_FloatPID_IndexD,
-  KD_FloatPID_Target,
-  KD_FloatPID_Tolerance,
+typedef struct _KDL_MPU6050_t {
+	I2C_HandleTypeDef *hi2c;
+	I2C_TypeDef *i2c;
+	uint16_t address;
 
-} KD_FloatPID_Const_t;
+	float AccX, AccY, AccZ;
+	float AccS;
+	float GyrX, GyrY, GyrZ;
+	float Temp;
 
-typedef struct _KD_FloatPID_t {
-  float Target;
-  float indexP;
-  float indexI;
-  float indexD;
-  float Tolerance;
-  void(*Downlink)(float result);
-
-  /* Private */
-  float Error0, Error1;
-  float Result;
-} KD_FloatPID_t;
+} KDL_MPU6050_t;
 /* Exported constants --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/
 
@@ -54,12 +44,25 @@ typedef struct _KD_FloatPID_t {
 /* Exported functions --------------------------------------------------------*/
 
 /* Initialization and de-initialization functions *****************************/
-KD_State_t KD_FloatPID_Init(KD_FloatPID_t* kpid, void* downlink);
+KDL_State_t KDL_MPU6050_Init(KDL_MPU6050_t *kmpu, I2C_HandleTypeDef* hi2c, uint16_t addr);
+
 /* Configuration functions ****************************************************/
-KD_State_t KD_FloatPID_SetIndex(KD_FloatPID_t* kpid, KD_FloatPID_Const_t set, float index);
+void KDL_MPU6050_Set_Gyro_Fsr(KDL_MPU6050_t *kmpu, uint8_t fsr);
+void KDL_MPU6050_Set_Accel_Fsr(KDL_MPU6050_t *kmpu, uint8_t fsr);
+void KDL_MPU6050_Set_LPF(KDL_MPU6050_t *kmpu, uint16_t lpf);
+void KDL_MPU6050_Set_Rate(KDL_MPU6050_t *kmpu, uint16_t rate);
+void KDL_MPU6050_Set_Fifo(KDL_MPU6050_t *kmpu, uint8_t sens);
+
 /* IO operation functions *****************************************************/
-KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t interval);
+void KDL_MPU6050_Get_Temperature(KDL_MPU6050_t *kmpu);
+void KDL_MPU6050_Get_Gyroscope(KDL_MPU6050_t *kmpu);
+void KDL_MPU6050_Get_Accelerometer(KDL_MPU6050_t *kmpu);
+
 /* State and Error functions **************************************************/
+void KDL_MPU6050_Write_Len(KDL_MPU6050_t *kmpu, uint8_t reg,uint8_t len,uint8_t *buf);                           //IIC连续写
+void KDL_MPU6050_Read_Len(KDL_MPU6050_t *kmpu, uint8_t reg,uint8_t len,uint8_t *buf);                         //IIC连续读
+void KDL_MPU6050_Write_Byte(KDL_MPU6050_t *kmpu, uint8_t reg,uint8_t data);				//IIC写一个字节
+uint8_t KDL_MPU6050_Read_Byte(KDL_MPU6050_t *kmpu, uint8_t reg);					//IIC读一个字节
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -67,6 +70,6 @@ KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t inte
 }
 #endif
 
-#endif /* KD_FLOATPID_H_ */
+#endif /* KLIB_TEMPLATE_H_ */
 
 /************************ (C) COPYRIGHT kirkz.tech *****END OF FILE****/

@@ -1,10 +1,10 @@
 /**
   ******************************************************************************
-  * @date    Mar 7, 2021
-  * @file    kd_floatpid.h
+  * @date    Mar 24, 2021
+  * @file    kdl_hcsr04.h
   * @author  Kirk_Z
   * @name    Kefan Zheng
-  * @brief   PID control in floating numbers
+  * @brief   HC-SR04 ultrasonic distance module header file
   * @version V0.0.0
   * @email   kirk_z@yeah.net
   ******************************************************************************
@@ -14,51 +14,41 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef KD_FLOATPID_H_
-#define KD_FLOATPID_H_
+#ifndef KDL_HCSR04_H_
+#define KDL_HCSR04_H_
 
 #ifdef __cplusplus
  extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "kd.h"
+#include "kdl.h"
+#include "kdl_pin.h"
 /* Exported types ------------------------------------------------------------*/
-typedef enum {
-  KD_FloatPID_IndexP,
-  KD_FloatPID_IndexI,
-  KD_FloatPID_IndexD,
-  KD_FloatPID_Target,
-  KD_FloatPID_Tolerance,
-
-} KD_FloatPID_Const_t;
-
-typedef struct _KD_FloatPID_t {
-  float Target;
-  float indexP;
-  float indexI;
-  float indexD;
-  float Tolerance;
-  void(*Downlink)(float result);
-
-  /* Private */
-  float Error0, Error1;
-  float Result;
-} KD_FloatPID_t;
+typedef struct _KDL_HCSR04_t {
+	KDL_Pin_t Trig, Echo;
+	uint32_t Ticks;
+} KDL_HCSR04_t;
 /* Exported constants --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/
 
 /* Private constants ---------------------------------------------------------*/
+#define KDL_HCSR04_TimeOut 0xFFFFFU
 /* Private macros ------------------------------------------------------------*/
 
 /* Exported functions --------------------------------------------------------*/
 
 /* Initialization and de-initialization functions *****************************/
-KD_State_t KD_FloatPID_Init(KD_FloatPID_t* kpid, void* downlink);
+KDL_State_t KDL_HCSR04_Init(
+		KDL_HCSR04_t* khcsr,
+		GPIO_TypeDef* Tport,
+		uint16_t Tpin,
+		GPIO_TypeDef* Eport,
+		uint16_t Epin
+		);
 /* Configuration functions ****************************************************/
-KD_State_t KD_FloatPID_SetIndex(KD_FloatPID_t* kpid, KD_FloatPID_Const_t set, float index);
 /* IO operation functions *****************************************************/
-KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t interval);
+uint32_t KDL_HCSR04_Measure(KDL_HCSR04_t* khcsr);
 /* State and Error functions **************************************************/
 
 /* Private functions ---------------------------------------------------------*/
@@ -67,6 +57,6 @@ KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t inte
 }
 #endif
 
-#endif /* KD_FLOATPID_H_ */
+#endif /* KDL_HCSR04_H_ */
 
 /************************ (C) COPYRIGHT kirkz.tech *****END OF FILE****/
