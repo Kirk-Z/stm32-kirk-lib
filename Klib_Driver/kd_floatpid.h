@@ -30,6 +30,7 @@ typedef enum {
   KD_FloatPID_IndexD,
   KD_FloatPID_Target,
   KD_FloatPID_Tolerance,
+  KD_FloatPID_Denominator,
 
 } KD_FloatPID_Const_t;
 
@@ -40,6 +41,8 @@ typedef struct _KD_FloatPID_t {
   float indexD;
   float Tolerance;
   void(*Downlink)(float result);
+
+  uint32_t Denominator;
 
   /* Private */
   float Error0, Error1;

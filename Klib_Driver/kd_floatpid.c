@@ -38,12 +38,9 @@ KD_State_t KD_FloatPID_Init(KD_FloatPID_t* kpid, void* downlink)
   {
     kpid->Downlink = downlink;
   }
-  else
-  {
-    return KD_ERROR;
-  }
 
   kpid->Result = 0;
+  kpid->Denominator = 1;
 
   return KD_OK;
 }
@@ -75,6 +72,11 @@ KD_State_t KD_FloatPID_SetIndex(KD_FloatPID_t* kpid, KD_FloatPID_Const_t set, fl
     kpid->Tolerance = index;
     return KD_OK;
   }
+  if(set == KD_FloatPID_Denominator)
+  {
+    kpid->Denominator = index;
+    return KD_OK;
+  }
   return KD_ERROR;
 }
 /* IO operation functions *****************************************************/
@@ -85,7 +87,7 @@ KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t inte
 
   /* Get Error */
   Error = current - kpid->Target;
-  Error /= interval;
+  // Error /= interval;
   if(fabs(Error) < kpid->Tolerance)
   {
 	  Error = 0;
@@ -106,11 +108,17 @@ KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t inte
   kpid->Error1 = kpid->Error0;
   kpid->Error0 = Error;
 
+  /* Inc */
+  Tmp *= interval;
+  if(kpid->Denominator)
+	  Tmp /= kpid->Denominator;
+
   /* Output result */
   kpid->Result += Tmp;
 
   /* Execute downlink */
-  kpid->Downlink(kpid->Result);
+  if(kpid->Downlink != NULL)
+	  kpid->Downlink(kpid->Result);
 
   return KD_OK;
 }
