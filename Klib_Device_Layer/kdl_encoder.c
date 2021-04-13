@@ -118,8 +118,8 @@ KDL_State_t KDL_Encoder_Convert(KDL_Encoder_t* decd)
 
 	decd->Position += tmp;
 	decd->Velocity = tmp;
-	decd->Velocity *= 65536;
-	decd->Velocity /= time - decd->Last;
+	decd->Velocity <<= 16;
+	decd->Velocity /= (int16_t)(time - decd->Last);
 
 	decd->Last = time;
 
