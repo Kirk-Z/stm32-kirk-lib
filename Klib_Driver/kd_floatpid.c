@@ -118,7 +118,7 @@ KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t inte
 
   /* Execute downlink */
   if(kpid->Downlink != NULL)
-	  kpid->Downlink(kpid->Result);
+	  kpid->Downlink(kpid->Result, Tmp);
 
   return KD_OK;
 }

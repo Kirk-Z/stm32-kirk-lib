@@ -40,7 +40,7 @@ typedef struct _KD_FloatPID_t {
   float indexI;
   float indexD;
   float Tolerance;
-  void(*Downlink)(float result);
+  void(*Downlink)(float result, float increment);
 
   uint32_t Denominator;
 
