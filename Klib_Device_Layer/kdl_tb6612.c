@@ -47,7 +47,7 @@ KDL_State_t KDL_TB6612_Init(KDL_TB6612_t* ktb)
 	return KDL_OK;
 }
 /* Configuration functions ****************************************************/
-KDL_State_t KDL_TB6612_SetPort(KDL_TB6612_t* ktb, TIM_HandleTypeDef* port, uint32_t channel)
+KDL_State_t KDL_TB6612_SetPort(KDL_TB6612_t* ktb, TIM_HandleTypeDef* port, uint32_t channel, uint8_t complement)
 {
 	if(ktb == NULL)
 		return KDL_ERROR;
@@ -56,6 +56,11 @@ KDL_State_t KDL_TB6612_SetPort(KDL_TB6612_t* ktb, TIM_HandleTypeDef* port, uint3
 	ktb->Channel = channel;
 
 	HAL_TIM_PWM_Start(port, channel);
+
+	if(complement == KDL_TB6612_PortComplement)
+	{
+		HAL_TIMEx_PWMN_Start(port, channel);
+	}
 
 	return KDL_OK;
 }
@@ -81,12 +86,15 @@ KDL_State_t KDL_TB6612_SetPin2(KDL_TB6612_t* ktb, GPIO_TypeDef* port, uint16_t p
 
 	return KDL_OK;
 }
+
 /* IO operation functions *****************************************************/
 KDL_State_t KDL_TB6612_SetSpeed(KDL_TB6612_t *ktb, float speed)
 {
 	if(ktb == NULL)
 		return KDL_ERROR;
 
+	if(speed < -1.00) speed = -1.00;
+	if(speed >  1.00) speed = 1.00;
 	ktb->Speed = speed;
 
 	KDL_TB6612_Refresh(ktb);
@@ -100,6 +108,8 @@ KDL_State_t KDL_TB6612_IncSpeed(KDL_TB6612_t *ktb, float speed)
 		return KDL_ERROR;
 
 	ktb->Speed += speed;
+	if(ktb->Speed < -1.00) ktb->Speed = -1.00;
+	if(ktb->Speed >  1.00) ktb->Speed = 1.00;
 
 	KDL_TB6612_Refresh(ktb);
 

@@ -39,7 +39,8 @@ typedef struct KDL_TB6612_t {
 } KDL_TB6612_t;
 /* Exported constants --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/
-
+#define KDL_TB6612_PortComplement 1U
+#define KDL_TB6612_PortGeneral    0U
 /* Private constants ---------------------------------------------------------*/
 /* Private macros ------------------------------------------------------------*/
 
@@ -48,7 +49,7 @@ typedef struct KDL_TB6612_t {
 /* Initialization and de-initialization functions *****************************/
 KDL_State_t KDL_TB6612_Init(KDL_TB6612_t* ktb);
 /* Configuration functions ****************************************************/
-KDL_State_t KDL_TB6612_SetPort(KDL_TB6612_t* ktb, TIM_HandleTypeDef* port, uint32_t channel);
+KDL_State_t KDL_TB6612_SetPort(KDL_TB6612_t* ktb, TIM_HandleTypeDef* port, uint32_t channel, uint8_t complement);
 KDL_State_t KDL_TB6612_SetPin1(KDL_TB6612_t* ktb, GPIO_TypeDef* port, uint16_t pin);
 KDL_State_t KDL_TB6612_SetPin2(KDL_TB6612_t* ktb, GPIO_TypeDef* port, uint16_t pin);
 /* IO operation functions *****************************************************/
