@@ -26,6 +26,3 @@ void KD_Delay(uint32_t us)
 		}
 	}
 }
-
-
-

@@ -1,24 +1,24 @@
 /**
-  ******************************************************************************
-  * @date    Mar 13, 2021
-  * @file    general_template.h
-  * @author  Kirk_Z
-  * @name    Kefan Zheng
-  * @brief   Template header file
-  * @version V0.0.0
-  * @email   kirk_z@yeah.net
-  ******************************************************************************
-  * @attention
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @date    Mar 13, 2021
+ * @file    general_template.h
+ * @author  Kirk_Z
+ * @name    Kefan Zheng
+ * @brief   Template header file
+ * @version V0.0.0
+ * @email   kirk_z@yeah.net
+ ******************************************************************************
+ * @attention
+ *
+ ******************************************************************************
+ */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef GENERAL_TEMPLATE_H_
 #define GENERAL_TEMPLATE_H_
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/

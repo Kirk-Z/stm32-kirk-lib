@@ -1,17 +1,17 @@
 /**
-  ******************************************************************************
-  * @date    Jan 16, 2021
-  * @file    kdl_bh1750.h
-  * @author  Kirk_Z
-  * @name    Kefan Zheng
-  * @brief   Brightness module BH1750 head file
-  * @version V0.0.0
-  * @email   kirk_z@yeah.net
-  ******************************************************************************
-  * @attention
-  *
-  ******************************************************************************
-  */
+    ******************************************************************************
+    * @date    Jan 16, 2021
+    * @file    kdl_bh1750.h
+    * @author  Kirk_Z
+    * @name    Kefan Zheng
+    * @brief   Brightness module BH1750 head file
+    * @version V0.0.0
+    * @email   kirk_z@yeah.net
+    ******************************************************************************
+    * @attention
+    *
+    ******************************************************************************
+    */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef KDL_BH1750_H_
@@ -25,15 +25,15 @@
 #include "kdl.h"
 /* Exported types ------------------------------------------------------------*/
  /**
-   * @brief  type of BH1750
-   */
+     * @brief  type of BH1750
+     */
 typedef struct _KDL_BH1750_t {
-	I2C_HandleTypeDef *hi2c;
-	I2C_TypeDef *i2c;
-	uint16_t address;
-	uint16_t luminance;
+    I2C_HandleTypeDef *hi2c;
+    I2C_TypeDef *i2c;
+    uint16_t address;
+    uint16_t luminance;
 
-	uint32_t check;
+    uint32_t check;
 } KDL_BH1750_t;
 /* Exported constants --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/

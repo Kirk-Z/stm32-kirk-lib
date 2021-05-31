@@ -234,7 +234,6 @@ uint8_t KDL_MPU6050_Read_Byte(KDL_MPU6050_t *kmpu, uint8_t reg)
   HAL_I2C_Mem_Read(kmpu->hi2c, kmpu->address, reg, I2C_MEMADD_SIZE_8BIT, &data, 1, 0xfff);
   //HAL_Delay(1);
 
-
   return data;
 }
 

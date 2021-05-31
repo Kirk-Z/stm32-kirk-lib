@@ -40,13 +40,15 @@ typedef struct _KD_FloatPID_t {
   float indexI;
   float indexD;
   float Tolerance;
-  void(*Downlink)(float result, float increment);
+  void(*Downlink)(struct _KD_FloatPID_t* pid);
 
-  uint32_t Denominator;
+  int32_t Denominator;
 
   /* Private */
   float Error0, Error1;
   float Result;
+  float Increment;
+  uint32_t Period;
 } KD_FloatPID_t;
 /* Exported constants --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/

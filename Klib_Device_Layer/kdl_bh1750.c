@@ -9,7 +9,7 @@
   * @email   kirk_z@yeah.net
   @verbatim
   ==============================================================================
-                        ##### How to use this driver #####
+						##### How to use this driver #####
   ==============================================================================
 
 
@@ -74,16 +74,16 @@ KDL_State_t KDL_BH1750_Init(KDL_BH1750_t* dbh, I2C_HandleTypeDef *hi2c, uint16_t
  */
 KDL_State_t KDL_BH1750_Start(KDL_BH1750_t* dbh)
 {
-    uint8_t t_Data = 0x10;
+	uint8_t t_Data = 0x10;
 
-    /* Check pointer valid */
-    if(!__IS_KDL_BH1750_T(dbh))
-    {
-    	return KDL_ERROR;
-    }
+	/* Check pointer valid */
+	if(!__IS_KDL_BH1750_T(dbh))
+	{
+		return KDL_ERROR;
+	}
 
-    /* Configure */
-    HAL_I2C_Master_Transmit(dbh->hi2c, dbh->address, &t_Data, 1, 0xff);
+	/* Configure */
+	HAL_I2C_Master_Transmit(dbh->hi2c, dbh->address, &t_Data, 1, 0xff);
 
 	return KDL_OK;
 }
@@ -96,28 +96,28 @@ KDL_State_t KDL_BH1750_Start(KDL_BH1750_t* dbh)
  */
 KDL_State_t KDL_BH1750_Convert(KDL_BH1750_t *dbh)
 {
-    uint16_t result;
-    uint8_t BUF[2];
+	uint16_t result;
+	uint8_t BUF[2];
 
-    /* Check pointer valid */
-    if(!__IS_KDL_BH1750_T(dbh))
-    {
-    	return KDL_ERROR;
-    }
+	/* Check pointer valid */
+	if(!__IS_KDL_BH1750_T(dbh))
+	{
+		return KDL_ERROR;
+	}
 
-    /* Start preparation */
-    KDL_BH1750_Start(dbh);
-    /* Wait 180ms for preparation */
-    HAL_Delay(180);
-    /* Receive data */
-    HAL_I2C_Master_Receive(dbh->hi2c, dbh->address+1, BUF, 2, 0xff);
+	/* Start preparation */
+	KDL_BH1750_Start(dbh);
+	/* Wait 180ms for preparation */
+	HAL_Delay(180);
+	/* Receive data */
+	HAL_I2C_Master_Receive(dbh->hi2c, dbh->address+1, BUF, 2, 0xff);
 
-    /* Convert result */
-    result=BUF[0];
-    result=(result<<8)+BUF[1];
-    dbh->luminance = result;
+	/* Convert result */
+	result=BUF[0];
+	result=(result<<8)+BUF[1];
+	dbh->luminance = result;
 
-    return KDL_OK;
+	return KDL_OK;
 }
 
 /* IO operation functions *****************************************************/
@@ -130,11 +130,11 @@ KDL_State_t KDL_BH1750_Convert(KDL_BH1750_t *dbh)
 uint16_t KDL_BH1750_GetLum(KDL_BH1750_t* dbh)
 {
 	/* Check pointer valid */
-    if(!__IS_KDL_BH1750_T(dbh))
-    {
-    	return 0xFFFF;
-    }
-    return dbh->luminance;
+	if(!__IS_KDL_BH1750_T(dbh))
+	{
+		return 0xFFFF;
+	}
+	return dbh->luminance;
 }
 
 /**
@@ -145,7 +145,7 @@ uint16_t KDL_BH1750_GetLum(KDL_BH1750_t* dbh)
  */
 float KDL_BH1750_fGetLum(KDL_BH1750_t* dbh)
 {
-    return (float)KDL_BH1750_GetLum(dbh)/1.2;
+	return (float)KDL_BH1750_GetLum(dbh)/1.2;
 }
 /* State and Error functions **************************************************/
 /**

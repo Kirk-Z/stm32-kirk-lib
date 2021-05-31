@@ -1,10 +1,10 @@
 /**
   ******************************************************************************
-  * @date    Jan 7, 2021
-  * @file    klib_template.h
+  * @date    May 13, 2021
+  * @file    kosal_shell.h
   * @author  Kirk_Z
   * @name    Kefan Zheng
-  * @brief   Template header file
+  * @brief   Shell on operation system header file
   * @version V0.0.0
   * @email   kirk_z@yeah.net
   ******************************************************************************
@@ -14,15 +14,16 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef KLIB_TEMPLATE_H_
-#define KLIB_TEMPLATE_H_
+#ifndef KOSAL_SHELL_H_
+#define KOSAL_SHELL_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-
+#include "kosal.h"
+#include "kosal_usart.h"
 /* Exported types ------------------------------------------------------------*/
 
 /* Exported constants --------------------------------------------------------*/
@@ -34,6 +35,7 @@ extern "C" {
 /* Exported functions --------------------------------------------------------*/
 
 /* Initialization and de-initialization functions *****************************/
+Kosal_State_t Kosal_Shell_Init(Kosal_Usart_t *kuart, UART_HandleTypeDef* huart);
 /* Configuration functions ****************************************************/
 /* IO operation functions *****************************************************/
 /* State and Error functions **************************************************/
@@ -44,6 +46,6 @@ extern "C" {
 }
 #endif
 
-#endif /* KLIB_TEMPLATE_H_ */
+#endif /* KOSAL_SHELL_H_ */
 
 /************************ (C) COPYRIGHT kirkz.tech *****END OF FILE****/

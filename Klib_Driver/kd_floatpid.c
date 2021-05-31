@@ -114,11 +114,13 @@ KD_State_t KD_FloatPID_Process(KD_FloatPID_t* kpid, float current, uint32_t inte
 	  Tmp /= kpid->Denominator;
 
   /* Output result */
+  kpid->Increment = Tmp;
   kpid->Result += Tmp;
+  kpid->Period = interval;
 
   /* Execute downlink */
   if(kpid->Downlink != NULL)
-	  kpid->Downlink(kpid->Result, Tmp);
+	  kpid->Downlink(kpid);
 
   return KD_OK;
 }
